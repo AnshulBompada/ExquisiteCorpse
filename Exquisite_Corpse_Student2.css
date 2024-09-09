@@ -1,0 +1,23 @@
+#section1 {
+    text-align: justify;
+    font-style: arial, Sans-Serif;
+    background-color: black;
+    color: red;
+}
+
+header {
+    background-color: black;
+    text-align: center;
+    color: white;
+}
+
+.colors .odd {
+    color: orange;
+}
+.colors .even {
+    color: purple;
+}
+
+#tophat {
+    color:white;
+}

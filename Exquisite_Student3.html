@@ -1,0 +1,667 @@
+<!--
+NOTE: THIS ALL BROKE BEFORE WE HAD TO USE IT SO WE JUST USED THE SAME ASCII ART
+CODY WASHINGTON
+-->
+
+<!DOCTYPE html>
+<html itemtype="http://schema.org/WebPage" lang="en">
+   <!--### HEAD ### -->
+  <head>
+    <title>Exquisite Corpse</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="Exquisite_Student3.css"/>    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+  <!--### BODY ### -->
+  <body>  
+    <main>
+    <!-- ### MAIN CONTENT ###-->
+    <div>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          let editors_index = 1;
+          for (const header of document.getElementsByClassName('header')) {
+            const parent = header.parentElement;
+  
+            let is_dragging = false;
+            let initial_x, initial_y, initial_left, initial_top;
+  
+            editors_index = Math.max(parent.style.zIndex, editors_index)
+          
+            const onMouseMove = (event) => {
+              if (!is_dragging) return;
+          
+              const delta_x = event.clientX - initial_x;
+              const delta_y = event.clientY - initial_y;
+          
+              requestAnimationFrame(() => {
+                parent.style['border-radius'] = '10px'
+                parent.style.left = `${initial_left + delta_x}px`;
+                parent.style.top = `${initial_top + delta_y}px`;
+              });
+            };
+  
+            const onMouseUp = () => {
+              if (!is_dragging) return;
+          
+              is_dragging = false;
+              header.style.cursor = 'grab';
+          
+              document.removeEventListener('mousemove', onMouseMove);
+              document.removeEventListener('mouseup', onMouseUp);
+            };
+          
+            header.addEventListener('mousedown', (Event) => {
+              is_dragging = true;
+              initial_x = Event.clientX;
+              initial_y = Event.clientY;
+          
+              const bounds = header.getBoundingClientRect();
+              initial_left = bounds.left;
+              initial_top = bounds.top;
+          
+              header.style.cursor = 'grabbing';
+              parent.style.zIndex = editors_index++;
+          
+              document.addEventListener('mousemove', onMouseMove);
+              document.addEventListener('mouseup', onMouseUp);
+            });
+          }
+  
+          const closeButtons = document.getElementsByClassName('close');
+          for (let index = 0; index < closeButtons.length; index++) {
+            closeButtons[index].addEventListener('click', () => {
+              const Editor = document.querySelector(`div.editor:nth-of-type(${index + 1})`);
+              if (Editor) {
+                Editor.style.visibility = 'hidden';
+              }
+            });
+          }  
+  
+          const maximizeButtons = document.getElementsByClassName('maximize');
+          for (let index = 0; index < maximizeButtons.length; index++) {
+            maximizeButtons[index].addEventListener('click', () => {
+              const Editor = document.querySelector(`div.editor:nth-of-type(${index + 1})`);
+              if (Editor) {
+                Editor.style.visibility = 'visible';
+                Editor.style.width = '100%'
+                Editor.style.height = '100%'
+                Editor.style.left = '0';
+                Editor.style.top = '0';
+                Editor.style['border-radius'] = '0';
+              }
+            });
+          } 
+  
+          const minimizeButtons = document.getElementsByClassName('minimize');
+          for (let index = 0; index < minimizeButtons.length; index++) {
+            minimizeButtons[index].addEventListener('click', () => {
+              const Editor = document.querySelector(`div.editor:nth-of-type(${index + 1})`);
+              if (Editor) {
+                Editor.style.visibility = 'visible';
+                Editor.style.width = '17px'
+                Editor.style.height = '17px'
+                Editor.style['border-radius'] = '10px';
+              }
+            });
+          }
+        });
+      </script>
+      <main>
+        <div id="cody-washington">
+        <!--### SKELETON ###-->
+        <div id="skeleton-window" class="editor">
+          <div class="header prevent-select">
+            <p class="title">skeleton.txt</p>
+            <span class="buttons">
+            <button class="minimize">
+              <svg viewBox="0 0 10.2 1" y="0px" x="0px"><rect height="1" width="10.2" y="50%" x="0">
+                </rect>
+              </svg>
+            </button>
+            <button class="maximize">
+              <svg viewBox="0 0 10 10">
+                <path d="M0,0v10h10V0H0z M9,9H1V1h8V9z"></path>
+              </svg>
+            </button>
+            <button class="close">
+              <svg viewBox="0 0 10 10">
+                <polygon points="10.2,0.7 9.5,0 5.1,4.4 0.7,0 0,0.7 4.4,5.1 0,9.5 0.7,10.2 5.1,5.8 9.5,10.2 10.2,9.5 5.8,5.1"></polygon>
+              </svg>
+            </button>
+            </span>
+          </div>
+        <hr/>
+          <div class="content">
+            <textarea spellcheck="false" id="skeleton-content">     
+          |             |
+         /               \       
+        |        ^        |
+        |      _/ \_      |
+        |   __/     \__   |
+        |  |           |  |
+        |  |           |  |
+        |  |           |  |                                                 
+        |  |           |  |
+        |  |           |  |
+        |  |           |  |
+        |  |           |  |
+        |  |           |  |
+        |  |           |  |
+        |  |           |  |
+        |  |           |  |
+        /   \          /  \
+       |     |        |    |
+        ######        ######
+            </textarea>
+          </div>
+        </div>
+        <!--### TREE ###-->
+        <div id="tree-window" class="editor">
+          <div class="header prevent-select">
+            <p class="title">tree.txt</p>
+            <span class="buttons">
+            <button class="minimize">
+              <svg viewBox="0 0 10.2 1" y="0px" x="0px"><rect height="1" width="10.2" y="50%" x="0">
+                </rect>
+              </svg>
+            </button>
+            <button class="maximize">
+              <svg viewBox="0 0 10 10">
+                <path d="M0,0v10h10V0H0z M9,9H1V1h8V9z"></path>
+              </svg>
+            </button>
+            <button class="close">
+              <svg viewBox="0 0 10 10">
+                <polygon points="10.2,0.7 9.5,0 5.1,4.4 0.7,0 0,0.7 4.4,5.1 0,9.5 0.7,10.2 5.1,5.8 9.5,10.2 10.2,9.5 5.8,5.1"></polygon>
+              </svg>
+            </button>
+            </span>
+          </div>
+        <hr/>
+          <div class="content">
+            <textarea spellcheck="false" id="tree-content">     
+        \/ |    |/
+        \/ / \||/  /_/___/_
+          \/   |/ \/
+    _\__\_\   |  /_____/_
+            \  | /          /
+  __ _-----`  |{,-----------~
+            \ }{
+              }{{
+              }}{
+              {{}
+        , -=-~{ .-^- _                                                                                                                                                                     
+            </textarea>
+          </div>
+        </div>
+        <!--### PUMPKIN ###-->
+        <div id="pumpkin-window" class="editor">
+          <div class="header prevent-select">
+            <p class="title">pumpkin.txt</p>
+            <span class="buttons">
+            <button class="minimize">
+              <svg viewBox="0 0 10.2 1" y="0px" x="0px"><rect height="1" width="10.2" y="50%" x="0">
+                </rect>
+              </svg>
+            </button>
+            <button class="maximize">
+              <svg viewBox="0 0 10 10">
+                <path d="M0,0v10h10V0H0z M9,9H1V1h8V9z"></path>
+              </svg>
+            </button>
+            <button class="close">
+              <svg viewBox="0 0 10 10">
+                <polygon points="10.2,0.7 9.5,0 5.1,4.4 0.7,0 0,0.7 4.4,5.1 0,9.5 0.7,10.2 5.1,5.8 9.5,10.2 10.2,9.5 5.8,5.1"></polygon>
+              </svg>
+            </button>
+            </span>
+          </div>
+        <hr/>
+          <div class="content">
+            <textarea spellcheck="false" id="pumpkin-content">     
+      __J"L__
+  ,-"`--...--'"-.
+  /  /\       /\  \
+|  /__\  _  /__\  |
+|       / \       |
+|    _  """  _    |
+  \   \\/\_/\//   /
+  "-._\/\_/\/_,-                                                                                                                                                            
+            </textarea>
+          </div>
+        </div>
+        <!--### HEAD ### -->
+        <div id="head-window" class="editor">
+          <div class="header prevent-select">
+            <p class="title">head.txt</p>
+            <span class="buttons">
+            <button class="minimize">
+              <svg viewBox="0 0 10.2 1" y="0px" x="0px"><rect height="1" width="10.2" y="50%" x="0">
+                </rect>
+              </svg>
+            </button>
+            <button class="maximize">
+              <svg viewBox="0 0 10 10">
+                <path d="M0,0v10h10V0H0z M9,9H1V1h8V9z"></path>
+              </svg>
+            </button>
+            <button class="close">
+              <svg viewBox="0 0 10 10">
+                <polygon points="10.2,0.7 9.5,0 5.1,4.4 0.7,0 0,0.7 4.4,5.1 0,9.5 0.7,10.2 5.1,5.8 9.5,10.2 10.2,9.5 5.8,5.1"></polygon>
+              </svg>
+            </button>
+            </span>
+          </div>
+        <hr/>
+          <div class="content">
+            <textarea spellcheck="false">
+  .-.
+ .'   `.
+ :g g   :
+ : o    `.
+:         ``.
+            </textarea>
+          </div>
+        </div>
+        <!--### TORSO ### -->
+        <div id="torso-window" class="editor">
+          <div class="header prevent-select">
+            <p class="title">torso.txt</p>
+            <span class="buttons">
+            <button class="minimize">
+              <svg viewBox="0 0 10.2 1" y="0px" x="0px"><rect height="1" width="10.2" y="50%" x="0">
+                </rect>
+              </svg>
+            </button>
+            <button class="maximize">
+              <svg viewBox="0 0 10 10">
+                <path d="M0,0v10h10V0H0z M9,9H1V1h8V9z"></path>
+              </svg>
+            </button>
+            <button class="close">
+              <svg viewBox="0 0 10 10">
+                <polygon points="10.2,0.7 9.5,0 5.1,4.4 0.7,0 0,0.7 4.4,5.1 0,9.5 0.7,10.2 5.1,5.8 9.5,10.2 10.2,9.5 5.8,5.1"></polygon>
+              </svg>
+            </button>
+            </span>
+          </div>
+        <hr/>
+          <div class="content">
+            <textarea spellcheck="false">
+  :         ``.
+ :             `.
+:  :         .   `.
+:   :          ` . `.
+ `.. :            `. ``;
+            </textarea>
+          </div>
+        </div>
+        <!--### BODY ### -->
+        <div id="body-window" class="editor">
+          <div class="header prevent-select">
+            <p class="title">body.txt</p>
+            <span class="buttons">
+            <button class="minimize">
+              <svg viewBox="0 0 10.2 1" y="0px" x="0px"><rect height="1" width="10.2" y="50%" x="0">
+                </rect>
+              </svg>
+            </button>
+            <button class="maximize">
+              <svg viewBox="0 0 10 10">
+                <path d="M0,0v10h10V0H0z M9,9H1V1h8V9z"></path>
+              </svg>
+            </button>
+            <button class="close">
+              <svg viewBox="0 0 10 10">
+                <polygon points="10.2,0.7 9.5,0 5.1,4.4 0.7,0 0,0.7 4.4,5.1 0,9.5 0.7,10.2 5.1,5.8 9.5,10.2 10.2,9.5 5.8,5.1"></polygon>
+              </svg>
+            </button>
+            </span>
+          </div>
+        <hr/>
+          <div class="content">
+            <textarea spellcheck="false">
+`:;             `:'
+:              `.
+  `.              `.     .
+    `'`'`'`---..,___`;.-'
+            </textarea>
+          </div>
+        </div>
+    </div>
+   </div>
+    </main>
+  </body>
+</html>
+<!DOCTYPE html>
+<html itemtype="http://schema.org/WebPage" lang="en">
+   <!--### HEAD ### -->
+  <head>
+    <title>Exquisite Corpse</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="Exquisite_Washington_Cody.css"/>    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+  <!--### BODY ### -->
+  <body>  
+    <main>
+    <!-- ### MAIN CONTENT ###-->
+    <div>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          let editors_index = 1;
+          for (const header of document.getElementsByClassName('header')) {
+            const parent = header.parentElement;
+  
+            let is_dragging = false;
+            let initial_x, initial_y, initial_left, initial_top;
+  
+            editors_index = Math.max(parent.style.zIndex, editors_index)
+          
+            const onMouseMove = (event) => {
+              if (!is_dragging) return;
+          
+              const delta_x = event.clientX - initial_x;
+              const delta_y = event.clientY - initial_y;
+          
+              requestAnimationFrame(() => {
+                parent.style['border-radius'] = '10px'
+                parent.style.left = `${initial_left + delta_x}px`;
+                parent.style.top = `${initial_top + delta_y}px`;
+              });
+            };
+  
+            const onMouseUp = () => {
+              if (!is_dragging) return;
+          
+              is_dragging = false;
+              header.style.cursor = 'grab';
+          
+              document.removeEventListener('mousemove', onMouseMove);
+              document.removeEventListener('mouseup', onMouseUp);
+            };
+          
+            header.addEventListener('mousedown', (Event) => {
+              is_dragging = true;
+              initial_x = Event.clientX;
+              initial_y = Event.clientY;
+          
+              const bounds = header.getBoundingClientRect();
+              initial_left = bounds.left;
+              initial_top = bounds.top;
+          
+              header.style.cursor = 'grabbing';
+              parent.style.zIndex = editors_index++;
+          
+              document.addEventListener('mousemove', onMouseMove);
+              document.addEventListener('mouseup', onMouseUp);
+            });
+          }
+  
+          const closeButtons = document.getElementsByClassName('close');
+          for (let index = 0; index < closeButtons.length; index++) {
+            closeButtons[index].addEventListener('click', () => {
+              const Editor = document.querySelector(`div.editor:nth-of-type(${index + 1})`);
+              if (Editor) {
+                Editor.style.visibility = 'hidden';
+              }
+            });
+          }  
+  
+          const maximizeButtons = document.getElementsByClassName('maximize');
+          for (let index = 0; index < maximizeButtons.length; index++) {
+            maximizeButtons[index].addEventListener('click', () => {
+              const Editor = document.querySelector(`div.editor:nth-of-type(${index + 1})`);
+              if (Editor) {
+                Editor.style.visibility = 'visible';
+                Editor.style.width = '100%'
+                Editor.style.height = '100%'
+                Editor.style.left = '0';
+                Editor.style.top = '0';
+                Editor.style['border-radius'] = '0';
+              }
+            });
+          } 
+  
+          const minimizeButtons = document.getElementsByClassName('minimize');
+          for (let index = 0; index < minimizeButtons.length; index++) {
+            minimizeButtons[index].addEventListener('click', () => {
+              const Editor = document.querySelector(`div.editor:nth-of-type(${index + 1})`);
+              if (Editor) {
+                Editor.style.visibility = 'visible';
+                Editor.style.width = '17px'
+                Editor.style.height = '17px'
+                Editor.style['border-radius'] = '10px';
+              }
+            });
+          }
+        });
+      </script>
+      <main>
+        <div id="cody-washington">
+        <!--### SKELETON ###-->
+        <div id="skeleton-window" class="editor">
+          <div class="header prevent-select">
+            <p class="title">skeleton.txt</p>
+            <span class="buttons">
+            <button class="minimize">
+              <svg viewBox="0 0 10.2 1" y="0px" x="0px"><rect height="1" width="10.2" y="50%" x="0">
+                </rect>
+              </svg>
+            </button>
+            <button class="maximize">
+              <svg viewBox="0 0 10 10">
+                <path d="M0,0v10h10V0H0z M9,9H1V1h8V9z"></path>
+              </svg>
+            </button>
+            <button class="close">
+              <svg viewBox="0 0 10 10">
+                <polygon points="10.2,0.7 9.5,0 5.1,4.4 0.7,0 0,0.7 4.4,5.1 0,9.5 0.7,10.2 5.1,5.8 9.5,10.2 10.2,9.5 5.8,5.1"></polygon>
+              </svg>
+            </button>
+            </span>
+          </div>
+        <hr/>
+          <div class="content">
+            <textarea spellcheck="false" id="skeleton-content">     
+          |             |
+         /               \       
+        |        ^        |
+        |      _/ \_      |
+        |   __/     \__   |
+        |  |           |  |
+        |  |           |  |
+        |  |           |  |                                                 
+        |  |           |  |
+        |  |           |  |
+        |  |           |  |
+        |  |           |  |
+        |  |           |  |
+        |  |           |  |
+        |  |           |  |
+        |  |           |  |
+        /   \          /  \
+       |     |        |    |
+        ######        ######
+            </textarea>
+          </div>
+        </div>
+        <!--### TREE ###-->
+        <div id="tree-window" class="editor">
+          <div class="header prevent-select">
+            <p class="title">tree.txt</p>
+            <span class="buttons">
+            <button class="minimize">
+              <svg viewBox="0 0 10.2 1" y="0px" x="0px"><rect height="1" width="10.2" y="50%" x="0">
+                </rect>
+              </svg>
+            </button>
+            <button class="maximize">
+              <svg viewBox="0 0 10 10">
+                <path d="M0,0v10h10V0H0z M9,9H1V1h8V9z"></path>
+              </svg>
+            </button>
+            <button class="close">
+              <svg viewBox="0 0 10 10">
+                <polygon points="10.2,0.7 9.5,0 5.1,4.4 0.7,0 0,0.7 4.4,5.1 0,9.5 0.7,10.2 5.1,5.8 9.5,10.2 10.2,9.5 5.8,5.1"></polygon>
+              </svg>
+            </button>
+            </span>
+          </div>
+        <hr/>
+          <div class="content">
+            <textarea spellcheck="false" id="tree-content">     
+        \/ |    |/
+        \/ / \||/  /_/___/_
+          \/   |/ \/
+    _\__\_\   |  /_____/_
+            \  | /          /
+  __ _-----`  |{,-----------~
+            \ }{
+              }{{
+              }}{
+              {{}
+        , -=-~{ .-^- _                                                                                                                                                                     
+            </textarea>
+          </div>
+        </div>
+        <!--### PUMPKIN ###-->
+        <div id="pumpkin-window" class="editor">
+          <div class="header prevent-select">
+            <p class="title">pumpkin.txt</p>
+            <span class="buttons">
+            <button class="minimize">
+              <svg viewBox="0 0 10.2 1" y="0px" x="0px"><rect height="1" width="10.2" y="50%" x="0">
+                </rect>
+              </svg>
+            </button>
+            <button class="maximize">
+              <svg viewBox="0 0 10 10">
+                <path d="M0,0v10h10V0H0z M9,9H1V1h8V9z"></path>
+              </svg>
+            </button>
+            <button class="close">
+              <svg viewBox="0 0 10 10">
+                <polygon points="10.2,0.7 9.5,0 5.1,4.4 0.7,0 0,0.7 4.4,5.1 0,9.5 0.7,10.2 5.1,5.8 9.5,10.2 10.2,9.5 5.8,5.1"></polygon>
+              </svg>
+            </button>
+            </span>
+          </div>
+        <hr/>
+          <div class="content">
+            <textarea spellcheck="false" id="pumpkin-content">     
+      __J"L__
+  ,-"`--...--'"-.
+  /  /\       /\  \
+|  /__\  _  /__\  |
+|       / \       |
+|    _  """  _    |
+  \   \\/\_/\//   /
+  "-._\/\_/\/_,-                                                                                                                                                            
+            </textarea>
+          </div>
+        </div>
+        <!--### HEAD ### -->
+        <div id="head-window" class="editor">
+          <div class="header prevent-select">
+            <p class="title">head.txt</p>
+            <span class="buttons">
+            <button class="minimize">
+              <svg viewBox="0 0 10.2 1" y="0px" x="0px"><rect height="1" width="10.2" y="50%" x="0">
+                </rect>
+              </svg>
+            </button>
+            <button class="maximize">
+              <svg viewBox="0 0 10 10">
+                <path d="M0,0v10h10V0H0z M9,9H1V1h8V9z"></path>
+              </svg>
+            </button>
+            <button class="close">
+              <svg viewBox="0 0 10 10">
+                <polygon points="10.2,0.7 9.5,0 5.1,4.4 0.7,0 0,0.7 4.4,5.1 0,9.5 0.7,10.2 5.1,5.8 9.5,10.2 10.2,9.5 5.8,5.1"></polygon>
+              </svg>
+            </button>
+            </span>
+          </div>
+        <hr/>
+          <div class="content">
+            <textarea spellcheck="false">
+  .-.
+ .'   `.
+ :g g   :
+ : o    `.
+:         ``.
+            </textarea>
+          </div>
+        </div>
+        <!--### TORSO ### -->
+        <div id="torso-window" class="editor">
+          <div class="header prevent-select">
+            <p class="title">torso.txt</p>
+            <span class="buttons">
+            <button class="minimize">
+              <svg viewBox="0 0 10.2 1" y="0px" x="0px"><rect height="1" width="10.2" y="50%" x="0">
+                </rect>
+              </svg>
+            </button>
+            <button class="maximize">
+              <svg viewBox="0 0 10 10">
+                <path d="M0,0v10h10V0H0z M9,9H1V1h8V9z"></path>
+              </svg>
+            </button>
+            <button class="close">
+              <svg viewBox="0 0 10 10">
+                <polygon points="10.2,0.7 9.5,0 5.1,4.4 0.7,0 0,0.7 4.4,5.1 0,9.5 0.7,10.2 5.1,5.8 9.5,10.2 10.2,9.5 5.8,5.1"></polygon>
+              </svg>
+            </button>
+            </span>
+          </div>
+        <hr/>
+          <div class="content">
+            <textarea spellcheck="false">
+  :         ``.
+ :             `.
+:  :         .   `.
+:   :          ` . `.
+ `.. :            `. ``;
+            </textarea>
+          </div>
+        </div>
+        <!--### BODY ### -->
+        <div id="body-window" class="editor">
+          <div class="header prevent-select">
+            <p class="title">body.txt</p>
+            <span class="buttons">
+            <button class="minimize">
+              <svg viewBox="0 0 10.2 1" y="0px" x="0px"><rect height="1" width="10.2" y="50%" x="0">
+                </rect>
+              </svg>
+            </button>
+            <button class="maximize">
+              <svg viewBox="0 0 10 10">
+                <path d="M0,0v10h10V0H0z M9,9H1V1h8V9z"></path>
+              </svg>
+            </button>
+            <button class="close">
+              <svg viewBox="0 0 10 10">
+                <polygon points="10.2,0.7 9.5,0 5.1,4.4 0.7,0 0,0.7 4.4,5.1 0,9.5 0.7,10.2 5.1,5.8 9.5,10.2 10.2,9.5 5.8,5.1"></polygon>
+              </svg>
+            </button>
+            </span>
+          </div>
+        <hr/>
+          <div class="content">
+            <textarea spellcheck="false">
+`:;             `:'
+:              `.
+  `.              `.     .
+    `'`'`'`---..,___`;.-'
+            </textarea>
+          </div>
+        </div>
+    </div>
+   </div>
+    </main>
+  </body>
+</html>
